@@ -5,8 +5,7 @@ const reviewRouter = require('./../routes/reviewRoutes');
 
 const router = express.Router();
 
-// router.param('id', tourController.checkID);
-
+// USE REVIEW ROUTER FOR SUCH ROUTES
 // POST /tour/234fad4/reviews
 // GET /tour/234fad4/reviews
 
@@ -28,11 +27,14 @@ router
 router
   .route('/tours-within/:distance/center/:latlng/unit/:unit')
   .get(tourController.getToursWithin);
+
+// SEARCH TOUR WITH RESPECT TO LOCATIONS
 // /tours-within?distance=233&center=-40,45&unit=mi
 // /tours-within/233/center/-40,45/unit/mi
 
 router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
 
+// MAIN ROUTES
 router
   .route('/')
   .get(tourController.getAllTours)
@@ -48,6 +50,8 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
+    tourController.uploadTourImages,
+    tourController.resizeTourImages,
     tourController.updateTour
   )
   .delete(

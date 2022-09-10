@@ -1,16 +1,16 @@
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
+const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 /**
  * Rendering Tours Overview Page
+ * 1) Get tour data from collection
+ * 2) Build template
+ * 3) Render that template using tour data from 1)
  */
 exports.getOverview = catchAsync(async (req, res, next) => {
-  // 1) Get tour data from collection
-  // 2) Build template
-  // 3) Render that template using tour data from 1)
-
   const tours = await Tour.find();
 
   res.status(200).render('overview', {
@@ -58,6 +58,23 @@ exports.getAccount = (req, res) => {
     title: 'Your account'
   });
 };
+
+/**
+ * Get All booked Tours by the User
+ */
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  // 1) Find all bookings
+  const bookings = await Booking.find({ user: req.user.id });
+
+  // 2) Find tours with the returned IDs
+  const tourIDs = bookings.map(el => el.tour);
+  const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+  res.status(200).render('overview', {
+    title: 'My Tours',
+    tours
+  });
+});
 
 /**
  * Update user's data

@@ -21,13 +21,20 @@ Tools used build the project are listed here.
 
 ![home-ui](./pics/home.jpg)
 
+Book a Tour you like. Stripe checkouts were implemented for billing users.
+
+![home](./pics/stripe.jpg)
+
 Tour detail page.
+
 ![home](./pics/tour.jpg)
 
 Map for showing tour path.
+
 ![home](./pics/mapbox.jpg)
 
 User account details.
+
 ![home](./pics/user.jpg)
 
 ### Authentication

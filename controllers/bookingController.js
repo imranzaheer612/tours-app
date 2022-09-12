@@ -68,17 +68,13 @@ exports.webhookCheckout = (req, res, next) => {
       signature,
       process.env.STRIPE_WEBHOOK_SECRET
     );
-    console.log('STRIPE EVENT CREATED');
   } catch (err) {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
 
-  console.log('CHECKING EVENT TYPE');
   if (event.type === 'checkout.session.completed')
-    console.log('DONE --> CREATE BOOKING');
-  createBookingCheckout(event.data.object);
+    createBookingCheckout(event.data.object);
 
-  console.log('SEND RESPONSE');
   res.status(200).json({ received: true });
 };
 

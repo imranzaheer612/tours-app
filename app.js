@@ -33,10 +33,14 @@ app.set('views', path.join(__dirname, 'views'));
 // SECURITY HEADERS
 app.use(helmet());
 
+// LOGGING
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
-  app.use(cors());
 }
+
+// SETTING CORS
+app.use(cors());
+app.options('*', cors());
 
 // RATE & DATA LIMITING
 const limiter = rateLimit({
